@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='utf-8'?>
+<?xml-model href="rfc7991bis.rnc"?>
+<?rfc toc='yes'?>
+<?rfc compact='yes'?>
+<?rfc subcompact='no'?>
+
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude"
+     xml:lang="en"
+     ipr="trust200902"
+     submissionType="IETF"
+     consensus="true"
+     category="std"
+     docName="draft-tuexen-tsvwg-dtls-chunk-key-management-00"
+     version="3">
+
+<front>
+<title>
+DTLS Chunk Key Management
+</title>
+<seriesInfo name="Internet-Draft" value="draft-tuexen-tsvwg-dtls-chunk-key-management-00"/>
+
+<author initials="M." surname="Tüxen" fullname="Michael Tüxen">
+  <organization abbrev='Münster Univ. of Appl. Sciences'>
+                Münster University of Applied Sciences</organization>
+  <address>
+    <postal>
+        <street>Stegerwaldstrasse 39</street>
+        <city>48565 Steinfurt</city>
+        <country>Germany</country>
+    </postal>
+    <email>tuexen@fh-muenster.de</email>
+  </address>
+</author>
+
+<author initials="H." surname="Tschofenig" fullname="Hannes Tschofenig">
+  <organization>Siemens</organization>
+  <address>
+    <email>hannes.tschofenig@gmx.net</email>
+  </address>
+</author>
+
+<author initials="T." surname="Reddy" fullname="Tirumaleswar Reddy">
+  <organization>Nokia</organization>
+  <address>
+    <email>kondtir@gmail.com</email>
+  </address>
+</author>
+
+<date />
+
+<abstract>
+<t>The Stream Control Transmission Protocol (SCTP) extension described in this
+document allows the support of a simple mechanism to distribute association
+requests between a cluster of SCTP end points providing the same service.
+In particular, this allows the use of anycast addresses in combination with
+SCTP.</t>
+</abstract>
+</front>
+
+<middle>
+<section>
+<name>Introduction</name>
+<t>This document defines how DTLS as specified in <xref target='RFC9147'/> is
+used to derive keys for the DTLS chunk described in
+<xref target='I-D.westerlund-tsvwg-sctp-dtls-chunk'/>.
+Furthermore, it is described how key updates and post handshake authentication
+is performed.</t>
+</section>
+
+<section anchor='conventions'>
+<name>Conventions</name>
+<t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>",
+"<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>",
+"<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>",
+"<bcp14>RECOMMENDED</bcp14>", "<bcp14>NOT RECOMMENDED</bcp14>",
+"<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to
+be interpreted as described in
+BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when,
+they appear in all capitals, as shown here.</t>
+</section>
+
+<section>
+<name>Architecture</name>
+<t>TBD</t>
+<figure>
+<name>Architecture</name>
+<artwork align="left">
++---------------+ +------------------------------+
+|      ULP      | |           DTLS 1.3           |
+|               | |   +---------------------+    |
+|               | | +>+    Key Exporter     +--+ |
+|               | | | +---------------------+  | |
+|               | | | +---------------------+  | |
+|               | | +-+    Key Management   +  | |
+|               | | | +---------------------+  | |
+|               | | |     +---+ +---+          | |
+|               | | |     | H | |   |          | |
+|               | | |     | a | |   |          | |
+|               | | | k   | n | | A |        k | |
+|               | | | e   | d | | l |        e | |
+|               | | | y   | s | | e |   ...  y | |
+|               | | | s   | h | | r |        s | |
+|               | | |     | a | | t |          | |
+|               | | |     | k | |   |          | |
+|               | | |     | e | |   |          | |
+|               | | |     +-+-+ +-+-+          | |
+|               | | |       |     |            | |
+|               | | |       +-----+---...      | |
+|               | | | ContentType |            | |
+|               | | |  +----------+----------+ | |
+|               | | +->|        Record       | | |
+|               | |    | Protection Operator | | |
++               | |    +----------+----------+ | |
++-------+-------+ +----------------------------+-+
+        |                          |           |
+        +--+-----------------------+           | keys
+      PPID |                                   V
++----------------------------------------------+-+
+|                    +---------------------+   | |
+|        SCTP        |         Chunk       |&lt;--+ |
+|                    | Protection Operator |     |
+|                    +---------------------+     |
++------------------------------------------------+
+</artwork>
+</figure>
+</section>
+
+<section>
+<name>Setting the Keys Initially</name>
+<t>Describe how the keys are derived from the DTLS master key and set.</t>
+</section>
+
+<section>
+<name>Updating the Keys</name>
+<t>Describe how the extended key update specified in
+<xref target='I-D.ietf-tls-extended-key-update'/> is used.
+In particular, describe when the new receive key is installed, the new send
+key is installed and how the old receive key is removed. Same for the restart
+keys. Describe how the key derivation is done.</t>
+</section>
+
+<section>
+<name>Post Handshake Authentication</name>
+<t>Describe how post handshake authentication as specified in
+<xref target='RFC9261'/> is used.
+</t>
+</section>
+
+<section>
+<name>IANA Considerations</name>
+<t>[NOTE to RFC-Editor: "RFCXXXX" is to be replaced by the RFC number you
+assign this document.]</t>
+<t>PPID for post handshake authentication.</t>
+</section>
+
+<section>
+<name>Security Considerations</name>
+<t>TBD.</t>
+</section>
+</middle>
+
+<back>
+<references>
+<name>References</name>
+<references>
+<name>Normative References</name>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9147.xml"/>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9260.xml"/>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9261.xml"/>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.westerlund-tsvwg-sctp-dtls-chunk.xml"/>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-extended-key-update"/>
+</references>
+
+</references>
+
+<!--
+<section numbered='false'>
+<name>Acknowledgments</name>
+<t>The authors wish to thank
+<contact fullname="..."/> and
+<contact fullname="..."/>
+for their invaluable comments.</t>
+</section>
+-->
+</back>
+</rfc>
