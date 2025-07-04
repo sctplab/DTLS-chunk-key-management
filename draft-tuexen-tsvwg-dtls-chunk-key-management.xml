@@ -14,8 +14,8 @@
      version="3">
 
 <front>
-<title>
-DTLS Chunk Key Management
+<title abbrev="DTLS Extension to Establish Keys for SCTP DTLS Chunk">
+Datagram Transport Layer Security (DTLS) Extension to Establish Keys for the Stream Control Transmission Protocol (SCTP) DTLS Chunk
 </title>
 <seriesInfo name="Internet-Draft" value="draft-tuexen-tsvwg-dtls-chunk-key-management-00"/>
 
