@@ -60,11 +60,43 @@ SCTP.</t>
 <middle>
 <section>
 <name>Introduction</name>
-<t>This document defines how DTLS as specified in <xref target='RFC9147'/> is
-used to derive keys for the DTLS chunk described in
-<xref target='I-D.westerlund-tsvwg-sctp-dtls-chunk'/>.
-Furthermore, it is described how key updates and post handshake authentication
-is performed.</t>
+<section anchor="introduction" numbered="true" toc="default">
+<t>The Stream Control Transmission Protocol (SCTP) is a transport protocol
+designed to support message-oriented communication with features such as
+multi-streaming and multi-homing. In many deployments, particularly those
+telecommunication networks and WebRTC data channels, it is essential to
+provide confidentiality, integrity, and peer authentication for SCTP traffic.
+</t>
+<t><xref target="RFC6083"/> defines a mechanism for securing SCTP by
+encapsulating it over DTLS 1.0/1.2, establishing a secure channel between
+SCTP endpoints. However, with the introduction of DTLS 1.3
+<xref target="RFC9147"/>, the protocol underwent significant changes,
+including removal of renegotiation, a new key schedule, and support for
+post-handshake operations. Without additional description, RFC 6083 cannot be
+used with DTLS 1.3.
+</t>
+<t>Additionally, <xref target="I-D.westerlund-tsvwg-sctp-dtls-chunk"/> defines
+a new method for secure and confidential transfer for SCTP packets but leaves
+key management to a separate specification.
+</t>
+<t>This document complements <xref target="I-D.westerlund-tsvwg-sctp-dtls-chunk"/>
+by specifying how DTLS 1.3 is used to derive and manage the cryptographic keys
+required for use with the DTLS Chunk, addressing key management aspects not
+covered in that specification. Specifically, it describes:
+</t>
+<t><list style="symbols">
+ <t>How the DTLS 1.3 handshake establishes the initial security context between
+SCTP endpoints.</t>
+ <t>How keying material is derived and associated with the SCTP association.</t>
+ <t>How DTLS 1.3 features, such as key updates and post-handshake authentication,
+are leveraged to support long-lived secure sessions.</t>
+</list>
+</t>
+<t>The goal of this specification is to modernize and extend the approach defined
+in RFC 6083, aligning it with the architectural and cryptographic changes introduced
+in DTLS 1.3, while enabling a cleaner and more efficient integration with native
+SCTP functionality.
+</t>
 </section>
 
 <section anchor='conventions'>
