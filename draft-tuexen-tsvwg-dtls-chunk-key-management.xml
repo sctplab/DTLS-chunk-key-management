@@ -14,7 +14,7 @@
      version="3">
 
 <front>
-<title abbrev="DTLS for Key Management for the DTLS Chunk">
+<title abbrev="DTLS for Key Management for DTLS Chunks">
 Using Datagram Transport Layer Security (DTLS) for Key Management for the Stream Control Transmission Protocol (SCTP) DTLS Chunk
 </title>
 <seriesInfo name="Internet-Draft" value="draft-tuexen-tsvwg-dtls-chunk-key-management-00"/>
