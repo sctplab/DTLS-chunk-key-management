@@ -115,7 +115,7 @@ they appear in all capitals, as shown here.</t>
 <artwork align="left">
 +---------------+ +-------------------------------+
 |      ULP      | | Post Handshake Authentication |
-|               | |           RFC 9261            |
+|               | |        using RFC 9261         |
 |               | +-------------------------------+
 |               | +-------------------------------+
 |               | |            DTLS 1.3           |
