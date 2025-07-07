@@ -176,15 +176,32 @@ keys. Describe how the key derivation is done.</t>
 </section>
 
 <section>
-<name>Post Handshake Authentication</name>
-<t>If the SCTP peers require periodic re-authentication after the DTLS handshake
-is complete to provide a proof of ownership of an updated identity (e.g.,
-X.509 certificate), the mechanism defined in <xref target='RFC9261'/>
-<bcp14>MUST</bcp14> be leveraged by the peers for mutual re-authentication.
-The application-layer protocol of DTLS <bcp14>MUST</bcp14> be used to send the
-authenticator request, either by the SCTP client or the SCTP server using the
-established DTLS connection.</t>
+<name>Post-Handshake Authentication</name>
+<t>
+SCTP peers may require periodic re-authentication after the DTLS
+handshake has completed. This is needed, for example, to demonstrate
+continued possession of a private key. In such cases, peers
+<bcp14>MUST</bcp14> use the post-handshake authentication mechanism
+defined in <xref target="RFC9261"/>.
+</t>
+<t>
+The application-layer protocol running over DTLS
+<bcp14>MUST</bcp14> be used to transmit the Authenticator Request.
+Either the SCTP client or the SCTP server may initiate this request
+using the established DTLS connection.
+</t>
+<t>
+Similarly, the application-layer protocol running over DTLS
+<bcp14>MUST</bcp14> be used to transmit the corresponding
+Authenticator message.
+</t>
+<t>
+TBD: A description of the application-layer message format(s) that
+carry the Authenticator Request and Authenticator will be provided
+in a future revision.
+</t>
 </section>
+
 
 <section>
 <name>IANA Considerations</name>
