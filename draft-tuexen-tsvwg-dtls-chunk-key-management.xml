@@ -286,18 +286,18 @@ continued possession of a private key. In such cases, peers
 defined in <xref target="RFC9261"/>.
 </t>
 <t>
-The application-layer protocol running over DTLS
+The upper layer protocol running over DTLS
 <bcp14>MUST</bcp14> be used to transmit the Authenticator Request.
 Either the SCTP client or the SCTP server may initiate this request
 using the established DTLS connection.
 </t>
 <t>
-Similarly, the application-layer protocol running over DTLS
+Similarly, the upper layer protocol protocol running over DTLS
 <bcp14>MUST</bcp14> be used to transmit the corresponding
 Authenticator message.
 </t>
 <t>
-TBD: A description of the application-layer message format(s) that
+TBD: A description of the upper layer protocol messages that
 carry the Authenticator Request and Authenticator will be provided
 in a future revision.
 This includes a message sequence chart illustrating the communication.
