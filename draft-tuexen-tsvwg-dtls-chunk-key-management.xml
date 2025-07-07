@@ -115,8 +115,7 @@ used to establish keys for securing SCTP using the DTLS Chunk. This approach
 combines the performance and encryption flexibility of DTLS Chunks with the
 integrated key management capabilities of DTLS. The resulting solution
 can be viewed from two perspectives: as a new key management method for
-SCTP, and as an SCTP-specific encryption layer integrated with DTLS.
-</t>
+SCTP, and as an SCTP-specific encryption layer integrated with DTLS.</t>
 
 <t>The key characteristics of the solution are as follows:</t>
 <ul>
@@ -125,7 +124,7 @@ SCTP, and as an SCTP-specific encryption layer integrated with DTLS.
 and parameters for use with DTLS Chunks.</t></li>
 <li><t>DTLS and relevant extensions are used to negotiate cryptographic
 algorithms and parameters, perform extended key updates, enable larger
-record sizes, and support post-handshake authentication.</t>
+record sizes, and support post-handshake authentication.</t></li>
 <li><t>All other DTLS record-layer content types are protected using
 standard DTLS record framing.</t></li>
 </ul>
@@ -133,7 +132,7 @@ standard DTLS record framing.</t></li>
 <t>Application data is never transmitted in DTLS record-layer application_data
 records. Instead, application data is passed to the DTLS stack, which forwards
 it to the Record Protection Operator. The operator encapsulates the data into
-DTLS Chunks, applying appropriate protection.</t></li>
+DTLS Chunks, applying appropriate protection.</t>
 
 <t>Any data that is not part of a DTLS Chunk MUST use standard DTLS record-layer
 framing and MUST be sent in separate datagrams.</t>
@@ -269,6 +268,7 @@ in a future revision.
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6083.xml"/>
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9147.xml"/>
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9260.xml"/>
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9261.xml"/>
