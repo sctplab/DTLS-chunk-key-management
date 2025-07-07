@@ -161,10 +161,10 @@ configured and supported.</t>
 <name>Architecture</name>
 <artwork align="left">
 +---------------+ +-------------------------------+
-| Upper         | | Post Handshake | Extended Key |
-| Layer         | | Authentication | Update       |    
-| Protocol      | +-------------------------------+
-| (ULP)         | +-------------------------------+
+|     Upper     | |        Post Handshake         |
+|     Layer     | |        Authentication         |
+|   Protocol    | +-------------------------------+
+|     (ULP)     | +-------------------------------+
 |               | |            DTLS 1.3           |
 |               | |    +---------------------+    |
 |               | | +->+    Key Exporter     +--+ |
