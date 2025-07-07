@@ -157,7 +157,7 @@ However, this approach requires that only algorithm suites compatible with
 both DTLS 1.3 and DTLS Chunks be configured and supported.</t>
 <figure>
 <name>Architecture</name>
-<artwork align="left">
+<artwork align="center">
 +---------------+ +-------------------------------+
 |     Upper     | |        Post Handshake         |
 |     Layer     | |        Authentication         |
@@ -207,16 +207,73 @@ both DTLS 1.3 and DTLS Chunks be configured and supported.</t>
 
 <section>
 <name>Setting the Keys Initially</name>
-<t>Describe how the keys are derived from the DTLS master key and set.</t>
+<t>The following figure shows when the key exporter is used to get
+key material from the DTLS connection.
+Then keys are derived from that and the diagram also shows when these keys
+are configured for the DTLS chunk and also when the SCTP stack is
+instructed to discard received SCTP packets, when they are unprotected.</t>
+<figure>
+<name>Usage of Key Exporter</name>
+<artwork align="center">
+Client                                             Server
+------                                             ------
+
+ Record 0
+ ClientHello                -------->
+ (epoch=0)
+                                                     Record 0
+                            &lt;--------             ServerHello
+                                                    (epoch=0)
+                                        {EncryptedExtensions}
+                                                    (epoch=2)
+                                                {Certificate}
+                                                    (epoch=2)
+                                          {CertificateVerify}
+                                                    (epoch=2)
+                                                   {Finished}
+                                                    (epoch=2)
+ Record 1
+ {Certificate}              -------->
+ (epoch=2)
+ {CertificateVerify}
+ (epoch=2)
+ {Finished}
+ (epoch=2)
+SET RECV KEYS
+                                                     SET RECV KEYS
+                                                     SET SEND KEYS
+                                                     Record 1
+                            &lt;--------                   [ACK]
+                                                    (epoch=3)
+ENFORCE PROTECTION
+SET SEND KEYS
+                                                    on sender dry event
+                                                            or
+                                                    on reception of
+                                                    protected packet
+                                                    ENFORCE PROTECTION
+</artwork>
+</figure>
+<t>The key derivation takes into account which protection solution identifiers
+have been sent and received. This way the communication is protected against
+downgrade attacks against the SCTP handshake.</t>
+<t>TBD: Take the message flow into account which was presented by Magnus.</t>
+<t>TBD: Provide formulas for deriving the keys and improve the message sequence
+diagram.</t>
 </section>
 
 <section>
 <name>Updating the Keys</name>
-<t>Describe how the extended key update specified in
-<xref target='I-D.ietf-tls-extended-key-update'/> is used.
-In particular, describe when the new receive key is installed, the new send
-key is installed and how the old receive key is removed. Same for the restart
-keys. Describe how the key derivation is done.</t>
+<t>For updating the keys used for the DTLS chunk, the key updated described in
+<xref target="RFC9147"/> <bcp14>MUST NOT</bcp14> be used, since it does not
+update the exporter keys. Therefore the extended key update as described in
+<xref target='I-D.ietf-tls-extended-key-update'/> <bcp14>MUST</bcp14> be used.
+When a receive key for epoc n + 1 is installed, the receive key for epoc n - 1
+<bcp14>SHOULD</bcp14> be removed.
+Deriving the keys from the exported keys is done similar to the initial
+derivation.</t>
+<t>TBD: Provide formulas for the key derivation and a message sequence diagram
+for the extended key update.</t>
 </section>
 
 <section>
@@ -243,6 +300,7 @@ Authenticator message.
 TBD: A description of the application-layer message format(s) that
 carry the Authenticator Request and Authenticator will be provided
 in a future revision.
+This includes a message sequence chart illustrating the communication.
 </t>
 </section>
 
