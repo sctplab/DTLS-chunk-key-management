@@ -32,10 +32,10 @@ DTLS Chunk Key Management
   </address>
 </author>
 
-<author initials="H." surname="Tschofenig" fullname="Hannes Tschofenig">
-  <organization>Siemens</organization>
+<author fullname="Hannes Tschofenig" initials="H." surname="Tschofenig" role="editor">
+  <organization abbrev="H-BRS">University of Applied Sciences Bonn-Rhein-Sieg</organization>
   <address>
-    <email>hannes.tschofenig@gmx.net</email>
+    <email>Hannes.Tschofenig@gmx.net</email>
   </address>
 </author>
 
