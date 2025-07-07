@@ -83,11 +83,12 @@ by specifying how DTLS 1.3 is used to derive and manage the cryptographic keys
 required for use with the DTLS Chunk, addressing key management aspects not
 covered in that specification. Specifically, it describes:</t>
 <ul>
-<li><t>How the DTLS 1.3 handshake establishes the initial security context between
-SCTP endpoints.</t></li>
-<li><t>How keying material is derived and associated with the SCTP association.</t>
-<t>How DTLS 1.3 features, such as key updates and post-handshake authentication,
-are leveraged to support long-lived secure sessions.</t></li>
+<li><t>How the DTLS 1.3 handshake establishes the initial security context
+between SCTP endpoints.</t></li>
+<li><t>How keying material is derived and associated with the
+SCTP association.</t></li>
+<li><t>How DTLS 1.3 features, such as key updates and post-handshake
+authentication, are leveraged to support long-lived secure sessions.</t></li>
 </ul>
 <t>The goal of this specification is to modernize and extend the approach defined
 in RFC 6083, aligning it with the architectural and cryptographic changes introduced
@@ -176,16 +177,18 @@ keys. Describe how the key derivation is done.</t>
 
 <section>
 <name>Post Handshake Authentication</name>
-<t>Describe how post handshake authentication as specified in
-<xref target='RFC9261'/> is used.
-</t>
+<t>If the SCTP peers require periodic re-authentication after the DTLS handshake
+is complete to provide a proof of ownership of an updated identity (e.g.,
+X.509 certificate), the mechanism defined in <xref target='RFC9261'/>
+<bcp14>MUST</bcp14> be leveraged by the peers for mutual re-authentication.
+The application-layer protocol of DTLS <bcp14>MUST</bcp14> be used to send the
+authenticator request, either by the SCTP client or the SCTP server using the
+established DTLS connection.</t>
 </section>
 
 <section>
 <name>IANA Considerations</name>
-<t>[NOTE to RFC-Editor: "RFCXXXX" is to be replaced by the RFC number you
-assign this document.]</t>
-<t>PPID for post handshake authentication.</t>
+<t>This document does not require any actions from IANA.</t>
 </section>
 
 <section>
