@@ -10,14 +10,14 @@
      submissionType="IETF"
      consensus="true"
      category="std"
-     docName="draft-ietf-tsvwg-dtls-chunk-key-management-00"
+     docName="draft-ietf-tsvwg-dtls-chunk-key-management-01"
      version="3">
 
 <front>
 <title abbrev="DTLS for Key Management for DTLS Chunks">
 Using Datagram Transport Layer Security (DTLS) for Key Management for the Stream Control Transmission Protocol (SCTP) DTLS Chunk
 </title>
-<seriesInfo name="Internet-Draft" value="draft-ietf-tsvwg-dtls-chunk-key-management-00"/>
+<seriesInfo name="Internet-Draft" value="draft-ietf-tsvwg-dtls-chunk-key-management-01"/>
 
 <author initials="M." surname="Tüxen" fullname="Michael Tüxen">
   <organization abbrev='Münster Univ. of Appl. Sciences'>
@@ -307,7 +307,20 @@ This includes a message sequence chart illustrating the communication.
 
 <section>
 <name>IANA Considerations</name>
-<t>This document does not require any actions from IANA.</t>
+<t>Note: IANA is requested to replace RFC-to-be with a reference to this document.</t>
+<t>IANA is requested to add the following entry to the DTLS Key Management
+Method Identifiers registry of the Stream Control Transmission Protocol (SCTP)
+Parameters group:</t>
+
+<table>
+<thead>
+<tr><th>Identifier</th><th>Key Management Method Name</th><th>Reference</th><th>Contact</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td>         <td>Single DTLS Connection</td>    <td>RFC-to-be</td><td>Document Authors</td></tr>
+</tbody>
+</table>
+
 </section>
 
 <section>
