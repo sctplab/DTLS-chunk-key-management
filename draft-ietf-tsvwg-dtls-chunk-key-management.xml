@@ -37,7 +37,6 @@ Using Datagram Transport Layer Security (DTLS) for Key Management for the Stream
   <address>
     <postal>
       <city>Neubiberg</city>
-      <region>Bavaria</region>
       <code>85577</code>
       <country>Germany</country>
     </postal>
@@ -68,10 +67,10 @@ leveraging standardized DTLS features for key management and rekeying.</t>
 <middle>
 <section anchor="introduction">
 <name>Introduction</name>
-<t>The Stream Control Transmission Protocol (SCTP) is a transport protocol
+<t>The Stream Control Transmission Protocol (SCTP) <xref target="RFC9260"/> is a transport protocol
 designed to support message-oriented communication with features such as
 multi-streaming and multi-homing.
-In many deployments, particularly those telecommunication networks and WebRTC
+In many deployments, particularly in telecommunication networks and WebRTC
 data channels, it is essential to provide confidentiality, integrity, and peer
 authentication for SCTP traffic.</t>
 <t><xref target="RFC6083"/> defines a mechanism for securing SCTP by
@@ -164,49 +163,54 @@ both DTLS 1.3 and DTLS Chunks be configured and supported.</t>
 <figure>
 <name>Architecture</name>
 <artwork align="center">
-+---------------+ +-------------------------------+
-|     Upper     | |        Post Handshake         |
-|     Layer     | |        Authentication         |
-|   Protocol    | +-------------------------------+
-|     (ULP)     | +-------------------------------+
-|               | |            DTLS 1.3           |
-|               | |    +---------------------+    |
-|               | | +->+    Key Exporter     +--+ |
-|               | | |  +---------------------+  | |
-|               | | |                           | |
-|               | | |  +---------------------+  | |
-|               | | +--+    Key Management   +  | |
-|               | | |  +---------------------+  | |
-|               | | |    +---+ +---+ +---+      | |
-|               | | |    | H | |   | | A |      | |
-|               | | |    | a | |   | | p |      | |
-|               | | | k  | n | | A | | p |    k | |
-|               | | | e  | d | | l | |   |    e | |
-|               | | | y  | s | | e | | D |... y | |
-|               | | | s  | h | | r | | a |    s | |
-|               | | |    | a | | t | | t |      | |
-|               | | |    | k | |   | | a |      | |
-|               | | |    | e | |   | |   |      | |
-|               | | |    +-+-+ +-+-+ +-+-+      | |
-|               | | |       |     |    | ...    | |
-|               | | |       +-----+----+        | |
-|               | | | ContentType |             | |
-|               | | |  +----------+----------+  | |
-|               | | +->|     DTLS Record     |  | |
-|               | |    | Protection Operator |  | |
-+               | |    +----------+----------+  | |
-+-------+-------+ +-----------------------------+-+
-        ^                         ^             |
++-------------+
+|    ULP      |&lt;---------------------------+
+|  Protocol   |                            |
+|   (ULP)     |                            v
+|             |     +--------------------------------------------+
+|             |     |                   DTLS 1.3                 |
+|             |     |  +-------------------------------------+   |
+|             |     |  |  Post Handshake Authentication      |   |
+|             |     |  +-------------------------------------+   |
+|             |     |  +-------------------------------------+   |
+|             |     |  |         Extended Key Update         |   |
+|             |     |  +-------------------------------------+   |
+|             |     |  +-------------------------------+     |   |
+|             |     |  |         Key Exporter          |&lt;----+   |
+|             |     |  +-------------------------------+     |   |
+|             |     |  +-------------------------------+     |   |
+|             |     |  |        Key Management         |     |   |
+|             |     |  +-------------------------------+     |   |
+|             |     |      +---+ +---+ +---+                 |   |
+|             |     |      | H | |   | | A |                 |   |
+|             |     |      | a | |   | | p |                 |   |
+|             |     |      | n | | A | | p |               k |   |
+|             |     |      | d | | l | |   |               e |   |
+|             |     |      | s | | e | | D |               y |   |
+|             |     |      | h | | r | | a |               s |   |
+|             |     |      | a | | t | | t |                 |   |
+|             |     |      | k | |   | | a |                 |   |
+|             |     |      | e | |   | |   |                 |   |
+|             |     |      +---+ +---+ +---+                 |   |
+|             |     |        |     |     |                   |   |
+|             |     |        +-----+-----+                   |   |
+|             |     |              |  Content Type           |   |
+|             |     | +-------------------------------+      |   |
++-------------+     | |        DTLS Record            |&lt;-----|   |
+        ^           | |     Protection Operator       |          |
+        |           | +-------------------------------+          |
+        |           |             ^             |                |
+        |           +-------------|-------------|----------------+
         |                         |             |
-        +--+----------------------+             | keys
-      PPID |                                    |
+        +--+----------------------+             |
+      PPID |                                    | keys
            V                                    V
-+-----------------------------------------------+-+
-|                    +---------------------+    | |
-|        SCTP        |     DTLS  Chunk     |&lt;---+ |
-|                    | Protection Operator |      |
-|                    +---------------------+      |
-+-------------------------------------------------+
+    +-------------------------------------------------------+
+    |                         +-------------------------+   |
+    |          SCTP           |     DTLS Chunk          |   |
+    |                         | Protection Operator     |   |
+    |                         +-------------------------+   |
+    +-------------------------------------------------------+
 </artwork>
 </figure>
 </section>
@@ -270,11 +274,11 @@ diagram.</t>
 
 <section>
 <name>Updating the Keys</name>
-<t>For updating the keys used for the DTLS chunk, the key updated described in
+<t>For updating the keys used for the DTLS chunk, the key update described in
 <xref target="RFC9147"/> <bcp14>MUST NOT</bcp14> be used, since it does not
 update the exporter keys. Therefore the extended key update as described in
 <xref target='I-D.ietf-tls-extended-key-update'/> <bcp14>MUST</bcp14> be used.
-When a receive key for epoc n + 1 is installed, the receive key for epoc n - 1
+When a receive key for epoch n + 1 is installed, the receive key for epoch n - 1
 <bcp14>SHOULD</bcp14> be removed.
 Deriving the keys from the exported keys is done similar to the initial
 derivation.</t>
@@ -292,18 +296,18 @@ continued possession of a private key. In such cases, peers
 defined in <xref target="RFC9261"/>.
 </t>
 <t>
-The application-layer protocol running over DTLS
+The upper layer protocol running over DTLS
 <bcp14>MUST</bcp14> be used to transmit the Authenticator Request.
 Either the SCTP client or the SCTP server may initiate this request
 using the established DTLS connection.
 </t>
 <t>
-Similarly, the application-layer protocol running over DTLS
+Similarly, the upper layer protocol running over DTLS
 <bcp14>MUST</bcp14> be used to transmit the corresponding
 Authenticator message.
 </t>
 <t>
-TBD: A description of the application-layer message format(s) that
+TBD: A description of the upper layer message format(s) that
 carry the Authenticator Request and Authenticator will be provided
 in a future revision.
 This includes a message sequence chart illustrating the communication.
@@ -348,7 +352,7 @@ Parameters group:</t>
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9260.xml"/>
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9261.xml"/>
 <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tsvwg-sctp-dtls-chunk.xml"/>
-<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-extended-key-update"/>
+<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-extended-key-update.xml"/>
 </references>
 
 </references>
