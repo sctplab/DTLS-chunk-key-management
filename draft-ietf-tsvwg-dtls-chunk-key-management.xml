@@ -32,10 +32,16 @@ Using Datagram Transport Layer Security (DTLS) for Key Management for the Stream
   </address>
 </author>
 
-<author fullname="Hannes Tschofenig" initials="H." surname="Tschofenig">
-  <organization abbrev="H-BRS">University of Applied Sciences Bonn-Rhein-Sieg</organization>
+<author initials="H." surname="Tschofenig" fullname="Hannes Tschofenig">
+  <organization abbrev="UniBw M.">University of the Bundeswehr Munich</organization>
   <address>
-    <email>Hannes.Tschofenig@gmx.net</email>
+    <postal>
+      <city>Neubiberg</city>
+      <region>Bavaria</region>
+      <code>85577</code>
+      <country>Germany</country>
+    </postal>
+    <email>hannes.tschofenig@gmx.net</email>
   </address>
 </author>
 
